@@ -11,14 +11,25 @@ class Node():
         self.f = None
         self.neighbours = []
 
-        if random.uniform(0,1) < 0.2:
+        if random.uniform(0,1) < 0.3:
             self.wall = True
 
     def heuristic(self, end):
-        distance = (self.x - end.x)**2 + (self.y - end.y)**2
+        '''
+        calculates shortest distance between self and end node 
+        '''
+        dstX = abs(end.x - self.x)
+        dstY = abs(end.y - self.y)
+        if dstY > dstX:
+            distance = 14 * dstX + 10 * (dstY - dstX)
+        else:
+            distance = 14 * dstY + 10 * (dstX - dstY)
         return distance
 
     def addNeighbours(self, grid):
+        '''
+        adds all wakable neighbours of self to a list 
+        '''
         if self.x < len(grid[0]) - 1:                            # right
             self.neighbours.append(grid[self.y][self.x + 1])
         if self.x > 0:                                           # left
